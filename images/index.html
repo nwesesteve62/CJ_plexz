@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steve Plexz | Premium Store</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    
+    <!-- ALL CSS IS NOW INSIDE THIS FILE -->
+    <style>
+        /* GLOBAL SETTINGS */
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Inter', sans-serif;
+            padding-top: 70px;
+        }
+
+        /* NAVIGATION */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #eee;
+        }
+        .navbar-brand { font-weight: 800; letter-spacing: -0.5px; cursor: pointer; }
+
+        /* HERO BANNER */
+        .hero-section {
+            position: relative;
+            height: 450px;
+            padding: 0;
+            margin-bottom: 40px;
+            border-radius: 0 0 35px 35px;
+            overflow: hidden;
+        }
+
+        .hero-section .carousel-item img {
+            height: 450px;
+            object-fit: cover;
+            filter: brightness(0.4);
+        }
+
+        .hero-text-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            color: white;
+            text-align: center;
+            width: 100%;
+        }
+        .hero-text-overlay .lead {
+            color: rgba(255, 255, 255, 0.75) !important;
+        }
+
+        /* Form & Product Card Styles */
+        .form-control:focus, .form-select:focus { box-shadow: none; border-color: #ced4da; }
+        .input-group-text { border-right: none; }
+        .form-check-input:checked { background-color: #111; border-color: #111; }
+        .pro-card { background: #ffffff; border-radius: 20px; overflow: hidden; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.05); transition: all 0.3s ease; height: 100%; display: flex; flex-direction: column; cursor: pointer; }
+        .pro-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .card-badge { position: absolute; top: 15px; right: 15px; font-size: 10px; font-weight: 700; padding: 5px 10px; border-radius: 8px; text-transform: uppercase; z-index: 2; }
+        .img-box { background: #f8f9fa; height: 250px; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .img-box img { max-width: 100%; max-height: 200px; object-fit: contain; transition: transform 0.3s ease; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1)); }
+        .pro-card:hover .img-box img { transform: scale(1.08); }
+        .card-details { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .product-title { font-size: 16px; font-weight: 700; color: #111; margin-bottom: 5px; }
+        .product-desc { font-size: 12px; color: #888; margin-bottom: 20px; }
+        .price-row { display: flex; justify-content: space-between; align-items: center; }
+        .price { font-size: 18px; font-weight: 800; color: #111; }
+        .btn-buy { text-decoration: none; background-color: #111; color: #fff; padding: 8px 20px; border-radius: 30px; font-size: 12px; font-weight: 600; transition: background 0.2s; }
+        .btn-buy:hover { background-color: #333; color: #fff; }
+        .detail-img-box { background-color: #fff; padding: 40px; border-radius: 30px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
+        .detail-img-box img { max-height: 400px; width: auto; max-width: 100%; filter: drop-shadow(0 20px 20px rgba(0,0,0,0.1)); }
+        .animate-fade { animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        footer a:hover { color: #fff !important; text-decoration: underline !important; }
+    </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- 1. NAVIGATION BAR -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#" onclick="goHome()">STEVE <span class="text-primary">PLEXZ</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <div class="d-flex align-items-center gap-3">
+                    <a href="#" class="nav-link text-dark fw-bold" onclick="goHome()">Marketplace</a>
+                    <button class="btn btn-link text-dark position-relative" type="button" data-bs-toggle="offcanvas" data-bs-target="#cartDrawer">
+                        <i class="bi bi-bag" style="font-size: 1.3rem;"></i>
+                        <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="display: none;">0</span>
+                    </button>
+                    <button class="btn btn-dark btn-sm rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                        Sell Item
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 2. HERO SECTION -->
+    <header class="hero-section" id="hero-section">
+        <div id="heroCarousel" class="carousel slide carousel-fade h-100" data-bs-ride="carousel" data-bs-interval="2000">
+            <div class="carousel-inner h-100">
+                <div class="carousel-item active h-100"><img src="images/laptop.jpg" class="d-block w-100" alt="Laptop"></div>
+                <div class="carousel-item h-100"><img src="images/watch.jpg" class="d-block w-100" alt="Watch"></div>
+                <div class="carousel-item h-100"><img src="images/camera.jpg" class="d-block w-100" alt="Camera"></div>
+            </div>
+        </div>
+        <div class="hero-text-overlay">
+            <h1 class="display-4 fw-bold">Curated Gadgets</h1>
+            <p class="lead text-white-50">Premium affiliate deals & exclusive products</p>
+        </div>
+    </header>
+
+    <!-- 3. MAIN CONTENT (MARKETPLACE & PRODUCT DETAIL VIEW) -->
+    <div id="marketplace-view" class="container my-5 flex-grow-1">
+        <div id="filter-bar" class="row mb-5 align-items-center bg-white p-3 rounded-4 shadow-sm mx-1">
+            <div class="col-md-4 mb-3 mb-md-0">
+                <div class="input-group"><span class="input-group-text bg-light border-0"><i class="bi bi-search"></i></span><input type="text" id="searchInput" class="form-control border-0 bg-light" placeholder="Search products..."></div>
+            </div>
+            <div class="col-md-8 d-flex gap-2 justify-content-md-end overflow-auto">
+                <select id="categoryFilter" class="form-select w-auto border-0 bg-light fw-bold" onchange="applyFilters()"><option value="all">All Categories</option><option value="Electronics">Electronics</option><option value="Fashion">Fashion</option><option value="Home">Home & Living</option><option value="Other">Other</option></select>
+                <button class="btn btn-dark rounded-pill px-3 filter-btn" data-type="all" onclick="setFilterType('all')">All</button>
+                <button class="btn btn-outline-dark rounded-pill px-3 filter-btn" data-type="Own" onclick="setFilterType('Own')">My Store</button>
+                <button class="btn btn-outline-dark rounded-pill px-3 filter-btn" data-type="Affiliate" onclick="setFilterType('Affiliate')">Partners</button>
+            </div>
+        </div>
+        <div class="row g-4" id="product-grid"></div>
+    </div>
+
+    <div id="product-detail-view" class="container my-5 flex-grow-1 d-none animate-fade">
+        <button class="btn btn-outline-dark mb-4 rounded-pill px-4" onclick="goHome()"><i class="bi bi-arrow-left"></i> Back to Store</button>
+        <div class="row g-5 align-items-center">
+            <div class="col-md-6"><div class="detail-img-box"><img id="detail-img" src="" class="img-fluid" alt="Product"></div></div>
+            <div class="col-md-6">
+                <div class="d-flex gap-2 mb-3"><span id="detail-category" class="badge bg-secondary">Category</span><span id="detail-badge" class="badge">BADGE</span></div>
+                <h1 id="detail-title" class="fw-bold display-5 mb-2">Product Title</h1>
+                <h3 id="detail-price" class="text-primary fw-bold mb-4">0 F CFA</h3>
+                <div class="p-4 bg-white rounded-4 shadow-sm mb-4">
+                    <h6 class="fw-bold text-uppercase text-muted small">Description</h6>
+                    <p id="detail-desc" class="text-secondary mb-0">Loading...</p>
+                </div>
+                <div class="d-grid gap-2">
+                    <div id="detail-btn-container"></div>
+                    <p class="text-muted text-center small mt-2"><i class="bi bi-shield-check"></i> Secure transaction</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. FOOTER -->
+    <footer class="bg-dark text-white pt-5 pb-3 mt-auto"><div class="container"><div class="row g-4"><div class="col-md-4"><h5 class="fw-bold">STEVE <span class="text-primary">PLEXZ</span></h5><p class="text-white-50 small">The ultimate destination for premium tech, curated affiliate deals, and community-driven commerce.</p></div><div class="col-md-4"><h6 class="text-uppercase fw-bold mb-3">Quick Links</h6><ul class="list-unstyled small text-white-50"><li><a href="#" onclick="goHome()" class="text-reset text-decoration-none mb-2 d-block">Marketplace</a></li><li><a href="#" data-bs-toggle="modal" data-bs-target="#uploadModal" class="text-reset text-decoration-none mb-2 d-block">Sell an Item</a></li></ul></div><div class="col-md-4"><h6 class="text-uppercase fw-bold mb-3">Admin</h6><p class="small text-white-50">Manage your store products via the "Sell Item" dashboard or delete items directly from the grid.</p></div></div><div class="border-top border-secondary mt-4 pt-3 text-center small text-white-50">&copy; 2024 Steve Plexz Inc. All rights reserved.</div></div></footer>
+
+    <!-- 5. MODALS & OFFCANVAS -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="cartDrawer"><div class="offcanvas-header border-bottom"><h5 class="offcanvas-title fw-bold">Your Bag</h5><button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button></div><div class="offcanvas-body d-flex flex-column"><div id="cart-items-container" class="flex-grow-1 overflow-auto"></div><div class="border-top pt-3 mt-3"><div class="d-flex justify-content-between align-items-center mb-3"><span class="text-muted">Subtotal</span><span class="fw-bold fs-5" id="cart-total">0 F CFA</span></div><div class="d-grid"><button id="triggerCheckoutBtn" class="btn btn-dark py-3 rounded-pill fw-bold">Proceed to Checkout</button></div></div></div></div>
+    <div class="modal fade" id="checkoutModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static"><div class="modal-dialog modal-lg modal-dialog-centered"><div class="modal-content border-0 shadow-lg rounded-4"><div class="modal-header border-0 pb-0"><h5 class="modal-title fw-bold">Secure Checkout</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body p-4"><form id="finalCheckoutForm"><div class="row g-4"><div class="col-md-7 border-end"><h6 class="text-uppercase text-muted fw-bold small mb-3">Shipping Details</h6><div class="row g-2 mb-3"><div class="col-6"><input type="text" class="form-control bg-light border-0 py-2" placeholder="First Name" required></div><div class="col-6"><input type="text" class="form-control bg-light border-0 py-2" placeholder="Last Name" required></div></div><div class="mb-3"><input type="email" class="form-control bg-light border-0 py-2" placeholder="Email Address" required></div><div class="mb-3"><input type="text" class="form-control bg-light border-0 py-2" placeholder="Street Address" required></div><div class="row g-2 mb-4"><div class="col-6"><input type="text" class="form-control bg-light border-0 py-2" placeholder="City" required></div><div class="col-6"><input type="text" class="form-control bg-light border-0 py-2" placeholder="Zip Code" required></div></div><h6 class="text-uppercase text-muted fw-bold small mb-3">Payment Method</h6><div class="d-flex gap-3"><div class="form-check p-3 bg-light rounded-3 w-100"><input class="form-check-input" type="radio" name="paymentMethod" id="payCard" checked><label class="form-check-label fw-bold small" for="payCard"><i class="bi bi-credit-card me-2"></i>Card</label></div><div class="form-check p-3 bg-light rounded-3 w-100"><input class="form-check-input" type="radio" name="paymentMethod" id="payCash"><label class="form-check-label fw-bold small" for="payCash"><i class="bi bi-cash-coin me-2"></i>COD</label></div></div></div><div class="col-md-5"><h6 class="text-uppercase text-muted fw-bold small mb-3">Order Summary</h6><div id="checkout-summary" class="mb-3" style="max-height: 200px; overflow-y: auto;"></div><div class="border-top pt-3"><div class="d-flex justify-content-between mb-1"><span class="text-muted small">Subtotal</span><span class="fw-bold small" id="checkout-subtotal">0 F CFA</span></div><div class="d-flex justify-content-between mb-3"><span class="text-muted small">Shipping</span><span class="fw-bold small text-success">Free</span></div><div class="d-flex justify-content-between"><span class="fw-bold">Total</span><span class="fw-bold fs-5 text-primary" id="checkout-final-total">0 F CFA</span></div></div><button type="submit" id="placeOrderBtn" class="btn btn-dark w-100 py-3 rounded-pill mt-4 fw-bold shadow-sm">Confirm Order</button></div></div></form></div></div></div></div>
+    <div class="modal fade" id="uploadModal" tabindex="-1" aria-hidden="true"><div class="modal-dialog modal-dialog-centered"><div class="modal-content border-0 shadow-lg" style="border-radius: 20px;"><div class="modal-header border-0 pb-0"><h5 class="modal-title fw-bold">Add New Product</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body p-4"><form id="uploadForm"><div class="mb-3"><label class="form-label text-muted small fw-bold">PRODUCT TITLE</label><input type="text" id="pTitle" class="form-control bg-light border-0 py-2" placeholder="e.g. iPhone 15" required></div><div class="row g-2 mb-3"><div class="col-6"><label class="form-label text-muted small fw-bold">PRICE (F CFA)</label><input type="number" id="pPrice" class="form-control bg-light border-0 py-2" placeholder="735000" required></div><div class="col-6"><label class="form-label text-muted small fw-bold">CATEGORY</label><select id="pCategory" class="form-select bg-light border-0 py-2"><option value="Electronics">Electronics</option><option value="Fashion">Fashion</option><option value="Home">Home & Living</option><option value="Other">Other</option></select></div></div><div class="mb-3"><label class="form-label text-muted small fw-bold">PRODUCT TYPE</label><select id="pType" class="form-select bg-light border-0 py-2"><option value="Affiliate">Affiliate Link (External)</option><option value="Own">My Product (Direct Sell)</option></select></div><div class="mb-3"><label class="form-label text-muted small fw-bold">IMAGE URL</label><input type="url" id="pImage" class="form-control bg-light border-0 py-2" placeholder="https://..." required></div><div class="mb-4"><label class="form-label text-muted small fw-bold">AFFILIATE LINK</label><input type="url" id="pLink" class="form-control bg-light border-0 py-2" placeholder="https://amazon.com/..."></div><div class="d-grid"><button type="submit" class="btn btn-dark rounded-pill fw-bold py-2">Upload Product</button></div></form></div></div></div></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- ALL JAVASCRIPT IS NOW INSIDE THIS FILE -->
+    <script>
+        // --- 1. CONFIGURATION & DATA ---
+        const STORAGE_KEY = 'stevePlexz_cfa_v1';
+
+        const defaultProducts = [
+            { id: 1, title: "iPhone 15 Pro Max", desc: "Titanium design, A17 Pro chip.", price: 735000, image: "images/iphone.jpg", category: "Electronics", badge: "HOT", type: "Own" },
+            { id: 2, title: "Sony WH-1000XM5", desc: "Industry Leading Noise Cancelling", price: 215000, image: "images/headphone.jpg", category: "Electronics", badge: "AFFILIATE", type: "Affiliate", link: "https://amazon.com" },
+            { id: 3, title: "Air Jordan 1 High", desc: "Classic Chicago colorway", price: 110000, image: "images/shoe.jpg", category: "Fashion", badge: "STEVE PLEXZ", type: "Own" },
+            { id: 4, title: "MacBook Air M2", desc: "Supercharged by M2 chip", price: 675000, image: "images/laptop.jpg", category: "Electronics", badge: "SALE", type: "Own" },
+            { id: 5, title: "Canon EOS R5", desc: "8K Video Mirrorless Camera", price: 2350000, image: "images/camera.jpg", category: "Electronics", badge: "AFFILIATE", type: "Affiliate", link: "https://amazon.com" },
+            { id: 6, title: "Modern Grey Sofa", desc: "Minimalist 3-seater for living room", price: 550000, image: "images/sofa.jpg", category: "Home", badge: "NEW", type: "Own" },
+            { id: 7, title: "PlayStation 5", desc: "Next-gen gaming console", price: 305000, image: "images/ps5.jpg", category: "Electronics", badge: "STOCK LOW", type: "Own" },
+            { id: 8, title: "Ray-Ban Aviator", desc: "Classic gold frame sunglasses", price: 98000, image: "images/glasses.jpg", category: "Fashion", badge: "AFFILIATE", type: "Affiliate", link: "https://amazon.com" },
+            { id: 9, title: "Dyson V15 Detect", desc: "Laser cordless vacuum cleaner", price: 460000, image: "images/vacuum.jpg", category: "Home", badge: "AFFILIATE", type: "Affiliate", link: "https://amazon.com" },
+            { id: 10, title: "Rolex Submariner", desc: "Luxury Diver Watch", price: 7650000, image: "images/watch.jpg", category: "Fashion", badge: "EXCLUSIVE", type: "Own" },
+            { id: 11, title: "Herman Miller Chair", desc: "Ergonomic Office Chair", price: 860000, image: "images/chair.jpg", category: "Home", badge: "PRO", type: "Own" },
+            { id: 12, title: "Gucci Leather Belt", desc: "Genuine leather with GG buckle", price: 275000, image: "images/belt.jpg", category: "Fashion", badge: "STEVE PLEXZ", type: "Own" }
+        ];
+
+        // --- 2. STATE MANAGEMENT ---
+        let products = JSON.parse(localStorage.getItem(STORAGE_KEY)) || defaultProducts;
+        if (!products || products.length === 0) products = defaultProducts;
+        let cart = [];
+        let typeFilter = 'all';
+
+        function saveData() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
+        }
+        
+        // --- Helper Function to Format Currency ---
+        function formatPrice(price) {
+            return price.toLocaleString('fr-FR') + ' F CFA';
+        }
+
+        // --- 3. NAVIGATION & VIEW SWITCHING ---
+        function goHome() {
+            document.getElementById('product-detail-view').classList.add('d-none');
+            document.getElementById('marketplace-view').classList.remove('d-none');
+            document.getElementById('hero-section').classList.remove('d-none');
+            window.scrollTo(0, 0);
+        }
+
+        function openDetail(id) {
+            const p = products.find(x => x.id === id);
+            if (!p) return;
+
+            document.getElementById('detail-img').src = p.image;
+            document.getElementById('detail-title').innerText = p.title;
+            document.getElementById('detail-desc').innerText = p.desc;
+            document.getElementById('detail-price').innerText = formatPrice(p.price);
+            document.getElementById('detail-category').innerText = p.category;
+            document.getElementById('detail-badge').innerText = p.badge;
+
+            const btnContainer = document.getElementById('detail-btn-container');
+            btnContainer.innerHTML = p.type === 'Affiliate' 
+                ? `<a href="${p.link}" target="_blank" class="btn btn-dark w-100 py-3 rounded-pill">Buy on Partner Site</a>` 
+                : `<button onclick="addToCart(${p.id})" class="btn btn-dark w-100 py-3 rounded-pill">Add to Cart</button>`;
+
+            document.getElementById('marketplace-view').classList.add('d-none');
+            document.getElementById('hero-section').classList.add('d-none');
+            document.getElementById('product-detail-view').classList.remove('d-none');
+            window.scrollTo(0, 0);
+        }
+
+        // --- 4. RENDERING & FILTERING ---
+        function applyFilters() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const category = document.getElementById('categoryFilter').value;
+            
+            let filtered = products.filter(p => 
+                p.title.toLowerCase().includes(search) &&
+                (category === 'all' || p.category === category) &&
+                (typeFilter === 'all' || p.type === typeFilter)
+            );
+            renderGrid(filtered);
+        }
+
+        function setFilterType(type) {
+            typeFilter = type;
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.toggle('btn-dark', btn.dataset.type === type);
+                btn.classList.toggle('btn-outline-dark', btn.dataset.type !== type);
+            });
+            applyFilters();
+        }
+
+        function renderGrid(data) {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = ""; 
+            if (data.length === 0) {
+                grid.innerHTML = `<div class="col-12 text-center py-5"><h4 class="text-muted">No products found...</h4></div>`;
+                return;
+            }
+            
+            data.forEach(p => {
+                const btnText = p.type === 'Affiliate' ? 'View on Partner' : 'Add to Cart';
+                grid.innerHTML += `
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                        <div class="pro-card">
+                            <span class="card-badge" style="${p.type === 'Affiliate' ? 'background: #eef2ff; color: #4338ca;' : 'background: #f0f8ff; color: #0066cc;'}">${p.badge}</span>
+                            <div class="img-box" onclick="openDetail(${p.id})">
+                                <img src="${p.image}" alt="${p.title}" onerror="this.onerror=null;this.src='https://via.placeholder.com/200?text=Image+Missing';">
+                            </div>
+                            <div class="card-details">
+                                <div onclick="openDetail(${p.id})">
+                                    <h5 class="product-title">${p.title}</h5>
+                                    <p class="product-desc">${p.desc}</p>
+                                </div>
+                                <div class="price-row">
+                                    <span class="price">${formatPrice(p.price)}</span>
+                                    <button onclick="handleQuickAction('${p.type}', ${p.id}, '${p.link}')" class="btn-buy">${btnText}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+            });
+        }
+        
+        // --- 5. CART LOGIC ---
+        function updateCartUI() {
+            const badge = document.getElementById('cart-badge');
+            const container = document.getElementById('cart-items-container');
+            const totalEl = document.getElementById('cart-total');
+            const checkoutBtn = document.getElementById('triggerCheckoutBtn');
+
+            badge.style.display = cart.length > 0 ? 'block' : 'none';
+            badge.innerText = cart.length;
+
+            let total = cart.reduce((sum, item) => sum + item.price, 0);
+            totalEl.innerText = formatPrice(total);
+            
+            checkoutBtn.disabled = cart.length === 0;
+            checkoutBtn.innerText = cart.length === 0 ? "Bag is Empty" : "Proceed to Checkout";
+            
+            container.innerHTML = "";
+            if (cart.length === 0) {
+                container.innerHTML = `<div class="text-center mt-5 text-muted"><i class="bi bi-bag-x" style="font-size: 4rem;"></i><p class="mt-3">Your bag is empty.</p></div>`;
+                return;
+            }
+            
+            cart.forEach((item, index) => {
+                container.innerHTML += `
+                    <div class="d-flex align-items-center mb-3 pb-3 border-bottom">
+                        <img src="${item.image}" style="width: 60px; height: 60px; object-fit: contain; background: #f8f9fa; border-radius: 8px;">
+                        <div class="ms-3 flex-grow-1">
+                            <h6 class="mb-0 fw-bold small">${item.title}</h6>
+                            <span class="text-muted small">${formatPrice(item.price)}</span>
+                        </div>
+                        <button onclick="cart.splice(${index}, 1); updateCartUI();" class="btn btn-sm btn-link text-danger"><i class="bi bi-trash-fill"></i></button>
+                    </div>`;
+            });
+        }
+
+        function addToCart(id) {
+            const product = products.find(p => p.id === id);
+            if (product) {
+                cart.push(product);
+                updateCartUI();
+                const cartDrawer = new bootstrap.Offcanvas(document.getElementById('cartDrawer'));
+                cartDrawer.show();
+            }
+        }
+
+        function handleQuickAction(type, id, link = '#') {
+            if (type === 'Own') {
+                addToCart(id);
+            } else {
+                window.open(link, '_blank');
+            }
+        }
+
+        // --- 6. EVENT LISTENERS & INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            applyFilters();
+            updateCartUI();
+
+            document.getElementById('searchInput').addEventListener('input', applyFilters);
+            document.getElementById('uploadForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const newProduct = {
+                    id: Date.now(),
+                    title: document.getElementById('pTitle').value,
+                    desc: "A newly added item.",
+                    price: parseFloat(document.getElementById('pPrice').value),
+                    category: document.getElementById('pCategory').value,
+                    image: document.getElementById('pImage').value,
+                    type: document.getElementById('pType').value,
+                    link: document.getElementById('pLink').value || "#",
+                    badge: document.getElementById('pType').value === 'Affiliate' ? "AFFILIATE" : "NEW"
+                };
+                products.unshift(newProduct);
+                saveData();
+                applyFilters();
+                this.reset();
+                bootstrap.Modal.getInstance(document.getElementById('uploadModal')).hide();
+                alert("Product Added Successfully");
+            });
+
+            document.getElementById('triggerCheckoutBtn').addEventListener('click', function() {
+                if (cart.length === 0) return;
+                const summary = document.getElementById('checkout-summary');
+                let total = 0;
+                summary.innerHTML = "";
+                cart.forEach(item => {
+                    total += item.price;
+                    summary.innerHTML += `<div class="d-flex justify-content-between"><small>${item.title}</small><small>${formatPrice(item.price)}</small></div>`;
+                });
+                document.getElementById('checkout-subtotal').innerText = formatPrice(total);
+                document.getElementById('checkout-final-total').innerText = formatPrice(total);
+                bootstrap.Offcanvas.getInstance(document.getElementById('cartDrawer')).hide();
+                new bootstrap.Modal(document.getElementById('checkoutModal')).show();
+            });
+
+            document.getElementById('finalCheckoutForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert("Order Confirmed! Thank you.");
+                cart = []; 
+                updateCartUI();
+                bootstrap.Modal.getInstance(document.getElementById('checkoutModal')).hide();
+                goHome();
+            });
+        });
+    </script>
+</body>
+</html>

@@ -33,18 +33,7 @@ const defaultProducts = [
     { id: 9, title: "Dyson V15 Detect", desc: "Laser cordless vacuum cleaner", price: 749.00, originalPrice: null, image: "images/vacuum.jpg", category: "Home", badge: "AFFILIATE", type: "Affiliate", link: "https://amazon.com", rating: 4.7, reviews: 1259, freeShipping: true },
     { id: 10, title: "Rolex Submariner", desc: "Luxury Diver Watch", price: 12500.00, originalPrice: null, image: "images/watch.jpg", category: "Fashion", badge: "EXCLUSIVE", type: "Own", rating: 5.0, reviews: 680, freeShipping: true },
     { id: 11, title: "Herman Miller Chair", desc: "Ergonomic Office Chair", price: 1400.00, originalPrice: 1550.00, image: "images/chair.jpg", category: "Home", badge: "PRO", type: "Own", rating: 4.9, reviews: 1980, freeShipping: true },
-    { id: 12, title: "Gucci Leather Belt", desc: "Genuine leather with GG buckle", price: 450.00, originalPrice: null, image: "images/belt.jpg", category: "Fashion", badge: "STEVE PLEXZ", type: "Own", rating: 4.8, reviews: 889, freeShipping: false },
-    { id: 13, title: "Coach", desc: "Home coach", price: 325.00, originalPrice: 390.00, image: "images/coach.jpg", category: "Home", badge: "STEVE PLEXZ", type: "Own", rating: 5.9, reviews: 1889, freeShipping: false },
-    { id: 14, title: "Wacth1", desc: "Fashion", price: 290.00, originalPrice: 350.00, image: "images/watch1.jpg", category: "Fashion", badge: "STEVE PLEXZ", type: "Own", rating: 6.0, reviews: 290, freeShipping: false },
-    { id: 15, title: "Watch2", desc: "Watch2", price: 350.00, originalPrice: 400.00, image: "images/wattch2.jpg", category: "Fashion", badge: "AFFILIATE", type: "Own", rating: 9.0, reviews: 479, freeShipping: true },
-    { id: 16, title: "Watch3", desc: "Watch3", price: 250.00, originalPrice: 300.00, image: "images/watch3.jpg", category: "Fashion", badge: "PRO", type: "Own", rating: 6.9, reviews: 1396, freeShipping: false },
-    { id: 17, title: "Watch4", desc: "Watch4", price: 150.00, originalPrice: null, image: "images/watch4.jpg", category: "Fashion", badge: "EXCLUSIVE", type: "Own", rating: 4.0, reviews: 340, freeShipping: false },
-    { id: 18, title: "Watch5", desc: "Watch5", price: 450.00, originalPrice: 650.00, image: "images/watch5.jpg", category: "Fashion", badge: "STEVE PLEXZ", type: "Own", rating: 10.0, reviews: 950, freeShipping: false },
-    { id: 19, title: "Watch6", desc: "Watch6", price: 550.00, originalPrice: 670.00, image: "images/watch6.jpg", category: "Fashion", badge: "PRO", type: "Own", rating: 8.9, reviews: 1095, freeShipping: false },
-    { id: 20, table: "Watch7", desc: "Watch7", price: 400.00, originalPrice: null, image: "images/watch7.jpg", category: "Fashion", badge: "PRO", type: "Own", rating: 7.0, reviews: 650, freeShipping: false },
-    { id: 21, title: "Watch8", desc: "Watch8", price: 300.00, originalPrice: 490.00, images: "images/watch8.jpg", category: "Fashion", badge: "EXCLUSIVE", type: "Own", rating: 7.8, reviews: 3302, freeShipping: false },
-    { id: 22, title: "table chairs", desc: "table chairs", price: 790.00, originalPrice: 990.00, image: "images/table chairs.jpg", category: "Fashion", badge: "PRO", type: "Own", rating: 12.0, reviews: 1045, freeShipping: false },
-    
+    { id: 12, title: "Gucci Leather Belt", desc: "Genuine leather with GG buckle", price: 450.00, originalPrice: null, image: "images/belt.jpg", category: "Fashion", badge: "STEVE PLEXZ", type: "Own", rating: 4.8, reviews: 889, freeShipping: false }
 ];
 
 // --- 3. STATE MANAGEMENT ---
