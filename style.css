@@ -1,0 +1,72 @@
+/* GLOBAL SETTINGS */
+body {
+    background-color: #f8f9fa;
+    font-family: 'Inter', sans-serif;
+    padding-top: 70px;
+}
+
+/* NAVIGATION */
+.navbar {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #eee;
+}
+.navbar-brand { font-weight: 800; letter-spacing: -0.5px; cursor: pointer; }
+
+/* HERO BANNER (UPDATED FOR SLIDER) */
+.hero-section {
+    position: relative;
+    height: 450px; /* Set a fixed height for the banner */
+    padding: 0;
+    margin-bottom: 40px;
+    border-radius: 0 0 35px 35px; /* The rounded corners you wanted */
+    overflow: hidden; /* Important to contain the rounded corners */
+}
+
+/* Carousel Image Styling */
+.hero-section .carousel-item img {
+    height: 450px;
+    object-fit: cover; /* Ensures the image covers the area without distortion */
+    filter: brightness(0.4); /* Darkens the image so text is readable */
+}
+
+/* Centered Text Overlay */
+.hero-text-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    color: white;
+    text-align: center;
+    width: 100%;
+}
+.hero-text-overlay .lead {
+    color: rgba(255, 255, 255, 0.75) !important;
+}
+
+
+/* ALL OTHER STYLES from your file remain exactly the same */
+/* ... (Form Styles, Product Card, Detail View, Footer, etc.) ... */
+.form-control:focus, .form-select:focus { box-shadow: none; border-color: #ced4da; }
+.input-group-text { border-right: none; }
+.form-check-input:checked { background-color: #111; border-color: #111; }
+.pro-card { background: #ffffff; border-radius: 20px; overflow: hidden; position: relative; box-shadow: 0 10px 25px rgba(0,0,0,0.05); transition: all 0.3s ease; height: 100%; display: flex; flex-direction: column; cursor: pointer; }
+.pro-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+.card-badge { position: absolute; top: 15px; right: 15px; font-size: 10px; font-weight: 700; padding: 5px 10px; border-radius: 8px; text-transform: uppercase; z-index: 2; }
+.img-box { background: #f8f9fa; height: 250px; display: flex; align-items: center; justify-content: center; padding: 20px; }
+.img-box img { max-width: 100%; max-height: 200px; object-fit: contain; transition: transform 0.3s ease; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1)); }
+.pro-card:hover .img-box img { transform: scale(1.08); }
+.card-details { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+.product-title { font-size: 16px; font-weight: 700; color: #111; margin-bottom: 5px; }
+.product-desc { font-size: 12px; color: #888; margin-bottom: 20px; }
+.price-row { display: flex; justify-content: space-between; align-items: center; }
+.price { font-size: 18px; font-weight: 800; color: #111; }
+.btn-buy { text-decoration: none; background-color: #111; color: #fff; padding: 8px 20px; border-radius: 30px; font-size: 12px; font-weight: 600; transition: background 0.2s; }
+.btn-buy:hover { background-color: #333; color: #fff; }
+.detail-img-box { background-color: #fff; padding: 40px; border-radius: 30px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
+.detail-img-box img { max-height: 400px; width: auto; max-width: 100%; filter: drop-shadow(0 20px 20px rgba(0,0,0,0.1)); }
+.animate-fade { animation: fadeIn 0.5s ease-in-out; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+footer a:hover { color: #fff !important; text-decoration: underline !important; }
+.toast { background-color: #111; color: white; }
